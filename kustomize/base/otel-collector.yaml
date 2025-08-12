@@ -64,6 +64,7 @@ data:
       # OTLP exporter for traces to Jaeger
       otlp/jaeger:
         endpoint: "jaeger-collector.observability.svc.cluster.local:4317"
+        
         tls:
           insecure: true
       
