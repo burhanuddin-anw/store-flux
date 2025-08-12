@@ -27,6 +27,25 @@ spec:
             - containerPort: 14268 # jaeger.thrift over HTTP
             - containerPort: 4317  # OTLP gRPC
             - containerPort: 4318  # OTLP HTTP
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "1Gi"
+          livenessProbe:
+            httpGet:
+              path: "/"
+              port: 16686
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: "/"
+              port: 16686
+            initialDelaySeconds: 5
+            periodSeconds: 5
 ---
 apiVersion: v1
 kind: Service
@@ -63,4 +82,4 @@ spec:
       targetPort: 16686
   selector:
     app: jaeger
-  type: ClusterIP   # Expose UI externally for development - use Ingress for production
+  type: ClusterIP 
