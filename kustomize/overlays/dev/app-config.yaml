@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: dev
+data:
+  environment: "development"
+  cluster_name: "otel-k8s"
+  deployment_id: "dev-1"
+  otel_exporter_otlp_endpoint: "http://otel-collector.observability:4317"
+  otel_exporter_otlp_metrics_endpoint: "http://otel-collector.observability:4317"
+  otel_exporter_otlp_traces_endpoint: "http://otel-collector.observability:4317"
+  prometheus_endpoint: "http://prometheus.observability:9090"
+  jaeger_endpoint: "http://jaeger-ui.observability:16686"

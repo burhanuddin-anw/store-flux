@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: virtual-customer
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: virtual-customer
+  template:
+    metadata:
+      labels:
+        app: virtual-customer
+    spec:
+      nodeSelector:
+        "kubernetes.io/os": linux
+      containers:
+        - name: virtual-customer
+          image: ghcr.io/azure-samples/aks-store-demo/virtual-customer:latest
+          env:
+            - name: ORDER_SERVICE_URL
+              value: http://order-service:3000/
+            - name: ORDERS_PER_HOUR
+              value: "100"
+            # OpenTelemetry configuration
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: "otel-collector.observability:4317"
+            - name: ENVIRONMENT
+              value: "production"
+            - name: RUST_LOG
+              value: "info,virtual_customer=debug,tracing=debug"
+          resources:
+            requests:
+              cpu: 1m
+              memory: 1Mi
+            limits:
+              cpu: 2m
+              memory: 20Mi

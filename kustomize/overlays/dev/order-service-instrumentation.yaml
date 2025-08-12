@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: order-service-instrumentation
+  namespace: dev
+data:
+  instrumentation.js: |
+    'use strict';
+    
+    console.log('Instrumenting Node.js application with OpenTelemetry...');
+    
+    // Simple HTTP instrumentation
+    const { registerInstrumentations } = require('@opentelemetry/instrumentation');
+    const { NodeTracerProvider } = require('@opentelemetry/sdk-trace-node');
+    const { HttpInstrumentation } = require('@opentelemetry/instrumentation-http');
+    const { FastifyInstrumentation } = require('@opentelemetry/instrumentation-fastify');
+    const { AmqplibInstrumentation } = require('@opentelemetry/instrumentation-amqplib');
+    const { SimpleSpanProcessor } = require('@opentelemetry/sdk-trace-base');
+    const { OTLPTraceExporter } = require('@opentelemetry/exporter-trace-otlp-proto');
+    const { diag, DiagConsoleLogger, DiagLogLevel } = require('@opentelemetry/api');
+    
+    // Set up logger
+    diag.setLogger(new DiagConsoleLogger(), DiagLogLevel.INFO);
+    
+    // Set up tracer provider
+    const provider = new NodeTracerProvider({
+      resource: {
+        'service.name': 'order-service',
+      }
+    });
+    
+    const otlpEndpoint = process.env.OTEL_EXPORTER_OTLP_ENDPOINT || 'http://localhost:4317';
+    const exporter = new OTLPTraceExporter({
+      url: `${otlpEndpoint}/v1/traces`,
+    });
+    
+    // Use simple span processor for sending spans to exporter
+    provider.addSpanProcessor(new SimpleSpanProcessor(exporter));
+    provider.register();
+    
+    // Register instrumentations
+    registerInstrumentations({
+      instrumentations: [
+        new HttpInstrumentation({
+          ignoreIncomingPaths: ['/health', '/metrics'],
+        }),
+        new FastifyInstrumentation(),
+        new AmqplibInstrumentation()
+      ],
+    });
+    
+    console.log('OpenTelemetry instrumentation initialized successfully');
+    

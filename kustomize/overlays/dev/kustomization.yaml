@@ -1,0 +1,89 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base
+  - app-config.yaml
+  - order-service-instrumentation.yaml
+
+patchesStrategicMerge:
+  - order-service-patch.yaml
+
+namespace: dev
+
+# Exclude the observability components from namespace transformation
+patchesJson6902:
+  - target:
+      group: apps
+      version: v1
+      kind: Deployment
+      name: jaeger
+    patch: |-
+      - op: replace
+        path: /metadata/namespace
+        value: observability
+  - target:
+      version: v1
+      kind: Service
+      name: jaeger-collector
+    patch: |-
+      - op: replace
+        path: /metadata/namespace
+        value: observability
+  - target:
+      version: v1
+      kind: Service
+      name: jaeger-ui
+    patch: |-
+      - op: replace
+        path: /metadata/namespace
+        value: observability
+  - target:
+      group: apps
+      version: v1
+      kind: Deployment
+      name: prometheus
+    patch: |-
+      - op: replace
+        path: /metadata/namespace
+        value: observability
+  - target:
+      version: v1
+      kind: Service
+      name: prometheus
+    patch: |-
+      - op: replace
+        path: /metadata/namespace
+        value: observability
+  - target:
+      version: v1
+      kind: ConfigMap
+      name: prometheus-conf
+    patch: |-
+      - op: replace
+        path: /metadata/namespace
+        value: observability
+  - target:
+      group: apps
+      version: v1
+      kind: Deployment
+      name: otel-collector
+    patch: |-
+      - op: replace
+        path: /metadata/namespace
+        value: observability
+  - target:
+      version: v1
+      kind: Service
+      name: otel-collector
+    patch: |-
+      - op: replace
+        path: /metadata/namespace
+        value: observability
+  - target:
+      version: v1
+      kind: ConfigMap
+      name: otel-collector-conf
+    patch: |-
+      - op: replace
+        path: /metadata/namespace
+        value: observability
