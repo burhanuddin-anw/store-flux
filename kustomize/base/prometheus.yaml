@@ -23,7 +23,7 @@ metadata:
     app.kubernetes.io/version: v3.1.0
     app.kubernetes.io/part-of: prometheus
   name: prometheus
-  namespace: otel-demo
+  namespace: observability
 data:
   allow-snippet-annotations: "false"
   alerting_rules.yml: |
@@ -355,7 +355,7 @@ metadata:
     app.kubernetes.io/version: v3.1.0
     app.kubernetes.io/part-of: prometheus
   name: prometheus
-  namespace: otel-demo
+  namespace: observability
 spec:
   selector:
     matchLabels:
