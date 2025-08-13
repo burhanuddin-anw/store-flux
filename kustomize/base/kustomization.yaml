@@ -14,3 +14,4 @@ resources:
   - jaeger.yaml
   - prometheus.yaml
   - ai-service.yaml
+  - namespace.yaml 
