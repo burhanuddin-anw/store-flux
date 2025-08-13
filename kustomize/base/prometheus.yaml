@@ -1,16 +1,16 @@
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  labels:
-    app.kubernetes.io/component: server
-    app.kubernetes.io/name: prometheus
-    app.kubernetes.io/instance: store-demo
-    app.kubernetes.io/version: v3.1.0
-    app.kubernetes.io/part-of: prometheus
-  name: prometheus
-  namespace: observability
-  annotations:
-    {}
+# apiVersion: v1
+# kind: ServiceAccount
+# metadata:
+#   labels:
+#     app.kubernetes.io/component: server
+#     app.kubernetes.io/name: prometheus
+#     app.kubernetes.io/instance: store-demo
+#     app.kubernetes.io/version: v3.1.0
+#     app.kubernetes.io/part-of: prometheus
+#   name: prometheus
+#   namespace: observability
+#   annotations:
+#     {}
 ---
 
 apiVersion: v1
