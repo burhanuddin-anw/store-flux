@@ -14,6 +14,3 @@ resources:
   - jaeger.yaml
   - prometheus.yaml
   - ai-service.yaml
-  - namespace.yaml 
-  - obs-app-config.yaml
-  - opensearch.yaml
