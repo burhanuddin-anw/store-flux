@@ -212,6 +212,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: opensearch
+  namespace: observability
   labels:
     app.kubernetes.io/name: opensearch
     app.kubernetes.io/instance: store-flux
@@ -240,6 +241,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: opensearch-headless
+  namespace: observability
   labels:
     app.kubernetes.io/name: opensearch
     app.kubernetes.io/instance: store-flux
