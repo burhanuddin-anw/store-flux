@@ -126,7 +126,9 @@ spec:
       port: 4318
       targetPort: 4318
   selector:
-    app: jaeger
+    app.kubernetes.io/name: jaeger
+    app.kubernetes.io/instance: store-flux
+    app.kubernetes.io/component: all-in-one
 ---
 apiVersion: v1
 kind: Service
@@ -141,5 +143,7 @@ spec:
       port: 16686
       targetPort: 16686
   selector:
-    app: jaeger
+    app.kubernetes.io/name: jaeger
+    app.kubernetes.io/instance: store-flux
+    app.kubernetes.io/component: all-in-one
   type: LoadBalancer
