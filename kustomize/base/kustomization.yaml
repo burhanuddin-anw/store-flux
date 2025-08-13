@@ -15,3 +15,5 @@ resources:
   - prometheus.yaml
   - ai-service.yaml
   - namespace.yaml 
+  - obs-app-config.yaml
+  

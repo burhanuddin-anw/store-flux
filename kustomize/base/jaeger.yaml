@@ -2,6 +2,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: jaeger
+  namespace: observability
   labels:
     app.kubernetes.io/name: jaeger
     app.kubernetes.io/instance: store-demo
