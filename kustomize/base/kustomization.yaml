@@ -16,4 +16,4 @@ resources:
   - ai-service.yaml
   - namespace.yaml 
   - obs-app-config.yaml
-  
+  - opensearch.yaml
