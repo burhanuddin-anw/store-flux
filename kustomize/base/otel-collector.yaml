@@ -22,11 +22,6 @@ data:
             endpoint: 0.0.0.0:6831
           thrift_binary:
             endpoint: 0.0.0.0:6832
-      httpcheck/store-front:
-        targets:
-          - endpoint: http://store-front.default:80
-            method: GET
-        collection_interval: 30s
 
     processors:
       memory_limiter:
@@ -63,7 +58,7 @@ data:
       
       # OTLP exporter for traces to Jaeger (replaces deprecated jaeger exporter)
       otlp/jaeger:
-        endpoint: "jaeger-collector.observability.svc.cluster.local:4317"
+        endpoint: "http://jaeger-collector.observability.svc.cluster.local:4317"
         tls:
           insecure: true
       

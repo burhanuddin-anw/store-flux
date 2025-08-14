@@ -20,7 +20,7 @@ spec:
           image: jaegertracing/all-in-one:1.52
           env:
             - name: COLLECTOR_OTLP_ENABLED
-              value: "false"
+              value: "true"
             - name: COLLECTOR_OTLP_ADDRESS
               value: "otel-collector.observability.svc.cluster.local:4317"
           ports:
