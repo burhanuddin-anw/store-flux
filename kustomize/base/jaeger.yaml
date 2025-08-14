@@ -25,7 +25,7 @@ spec:
             - containerPort: 16686 # UI
             - containerPort: 14250 # Model used for tracing
             - containerPort: 14268 # jaeger.thrift over HTTP
-            - containerPort: 4317  # OTLP gRPC
+            - containerPort: 4317  # OTLP gRPC and
             - containerPort: 4318  # OTLP HTTP
 ---
 apiVersion: v1
