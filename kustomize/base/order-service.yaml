@@ -36,8 +36,10 @@ spec:
             # OpenTelemetry configuration
             - name: OTEL_EXPORTER_OTLP_ENDPOINT
               value: "http://otel-collector.observability:4318"
-              
-              # value: "http://otel-collector.observability:4318/v1/traces"
+            - name: OTEL_SERVICE_NAME
+              value: "order-service"
+            - name: OTEL_RESOURCE_ATTRIBUTES
+              value: "service.name=order-service,service.version=1.0.0,deployment.environment=production"
             - name: ENVIRONMENT
               value: "production"
           resources:

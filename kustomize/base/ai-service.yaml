@@ -44,6 +44,10 @@ spec:
             # OpenTelemetry configuration
             - name: OTEL_EXPORTER_OTLP_ENDPOINT
               value: "http://otel-collector.observability:4317"
+            - name: OTEL_SERVICE_NAME
+              value: "ai-service"
+            - name: OTEL_RESOURCE_ATTRIBUTES
+              value: "service.name=ai-service,service.version=1.0.0,deployment.environment=production"
             - name: ENVIRONMENT
               value: "production"
             # Use opentelemetry-instrument for auto-instrumentation

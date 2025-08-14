@@ -29,6 +29,10 @@ spec:
               value: "production"
             - name: VITE_OTEL_EXPORTER_OTLP_ENDPOINT
               value: "http://otel-collector.observability:4318/v1/traces"
+            - name: VITE_OTEL_SERVICE_NAME
+              value: "store-front"
+            - name: VITE_OTEL_RESOURCE_ATTRIBUTES
+              value: "service.name=store-front,service.version=0.1.0,deployment.environment=production"
           resources:
             requests:
               cpu: 1m
