@@ -61,9 +61,9 @@ data:
       debug:
         verbosity: detailed
       
-      # Add Jaeger exporter for traces
-      jaeger:
-        endpoint: "jaeger-collector.observability.svc.cluster.local:14250"
+      # OTLP exporter for traces to Jaeger (replaces deprecated jaeger exporter)
+      otlp/jaeger:
+        endpoint: "jaeger-collector.observability.svc.cluster.local:4317"
         tls:
           insecure: true
       
@@ -89,7 +89,7 @@ data:
         traces:
           receivers: [otlp, jaeger]
           processors: [memory_limiter, k8sattributes]
-          exporters: [jaeger, debug]  # Added jaeger exporter here
+          exporters: [otlp/jaeger, debug]  # Using OTLP exporter to send traces to Jaeger
         metrics:
           receivers: [otlp, httpcheck/store-front]
           processors: [memory_limiter, k8sattributes]
