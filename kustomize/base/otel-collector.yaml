@@ -22,6 +22,11 @@ data:
             endpoint: 0.0.0.0:6831
           thrift_binary:
             endpoint: 0.0.0.0:6832
+      httpcheck/store-front:
+        targets:
+          - endpoint: http://store-front.default.svc.cluster.local:80/health
+            method: GET
+        collection_interval: 30s
 
     processors:
       memory_limiter:
