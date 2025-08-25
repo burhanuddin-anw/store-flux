@@ -59,8 +59,8 @@ spec:
             - -c
             - |
               pip install opentelemetry-distro[otlp] opentelemetry-instrumentation
-              python -m opentelemetry.instrumentation.bootstrap --action=install
-              python -m opentelemetry.instrumentation.auto_instrumentation python -m uvicorn main:app --host 0.0.0.0 --port 5001
+              opentelemetry-bootstrap --action=install
+              exec opentelemetry-instrument python -m uvicorn main:app --host 0.0.0.0 --port 5001
           resources:
             requests:
               cpu: 20m
