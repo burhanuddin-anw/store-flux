@@ -15,18 +15,7 @@ spec:
     spec:
       nodeSelector:
         "kubernetes.io/os": linux
-      # Add init container for OpenTelemetry auto-instrumentation
-      initContainers:
-        - name: otel-auto-instrumentation
-          image: ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-python:latest
-          command:
-            - cp
-            - -r
-            - /autoinstrumentation/.
-            - /otel-auto-instrumentation-python
-          volumeMounts:
-            - name: otel-auto-instrumentation-python
-              mountPath: /otel-auto-instrumentation-python
+
       containers:
         - name: ai-service
           image: ghcr.io/azure-samples/aks-store-demo/ai-service:latest
@@ -63,25 +52,15 @@ spec:
             - name: ENVIRONMENT
               value: "production"
             # Auto-instrumentation configuration
-            - name: PYTHONPATH
-              value: "/otel-auto-instrumentation-python/opentelemetry/instrumentation/auto_instrumentation:/app"
             - name: OTEL_PYTHON_DISABLED_INSTRUMENTATIONS
               value: ""
-          volumeMounts:
-            - name: otel-auto-instrumentation-python
-              mountPath: /otel-auto-instrumentation-python
           command:
-            - python
-            - -m
-            - opentelemetry.instrumentation.auto_instrumentation
-            - python
-            - -m
-            - uvicorn
-            - main:app
-            - --host
-            - "0.0.0.0"
-            - --port
-            - "5001"
+            - sh
+            - -c
+            - |
+              pip install opentelemetry-distro[otlp] opentelemetry-instrumentation
+              python -m opentelemetry.instrumentation.bootstrap --action=install
+              python -m opentelemetry.instrumentation.auto_instrumentation python -m uvicorn main:app --host 0.0.0.0 --port 5001
           resources:
             requests:
               cpu: 20m
@@ -110,9 +89,7 @@ spec:
             initialDelaySeconds: 3
             failureThreshold: 10
             periodSeconds: 10
-      volumes:
-        - name: otel-auto-instrumentation-python
-          emptyDir: {}
+
 ---
 apiVersion: v1
 kind: Service
